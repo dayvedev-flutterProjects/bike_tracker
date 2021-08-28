@@ -5,9 +5,11 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'models/bike.dart';
 
 void main() async {
-  await Hive.initFlutter();
 
-   //await Hive.openBox<Bike>(AppConstants.bikeBox);
+  await Hive.initFlutter();
+  Hive.registerAdapter(BikeAdapter());
+
+  await Hive.openBox<Bike>(AppConstants.bikeBox);
 
   runApp(MyApp());
 }
