@@ -16,7 +16,6 @@ class AddBikePage extends StatefulWidget {
 }
 
 class _AddBikePageState extends State<AddBikePage> {
-  //late AppUtils _appUtils;
   final bikesBox = Hive.box<Bike>(AppConstants.bikeBox);
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _onFormChanged = false;
@@ -31,16 +30,18 @@ class _AddBikePageState extends State<AddBikePage> {
   String selectedBikeType = "Standard";
 
   @override
-  Widget build(BuildContext context) {
-    //_appUtils = AppUtils(context);
-
+  void initState() {
+    super.initState();
     if (!widget.addBike){
       ownerNameController.text = widget.bikeToUpdate!.ownerName;
       makeController.text = widget.bikeToUpdate!.make;
       modelController.text = widget.bikeToUpdate!.model;
+      selectedBikeType = widget.bikeToUpdate!.bikeType;
     }
+  }
 
-
+  @override
+  Widget build(BuildContext context) {
 
     return Scaffold(
       appBar: AppBar(
