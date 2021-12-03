@@ -1,3 +1,4 @@
+import 'package:bike_tracker/pages/bikes_page.dart';
 import 'package:bike_tracker/utils/AppConstants.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -32,9 +33,11 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      // home:
+      home: BikesPage(),
     );
   }
+
+
 }
 
 
