@@ -84,90 +84,102 @@ class _AddBikePageState extends State<AddBikePage> {
                         height: 20,
                       ),
 
-                      TextFormField(
-                        controller: ownerNameController,
-                        //style: TextStyle(color: AppColors.textFieldTextColor),
-                        decoration: InputDecoration(
-                          fillColor: Colors.grey[200],
-                          filled: true,
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          helperText: "Required",
-                          labelText:'Owner Name',
-                          prefixIcon: Icon(Icons.person, color: Colors.black, ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: ownerNameController,
+                          //style: TextStyle(color: AppColors.textFieldTextColor),
+                          decoration: InputDecoration(
+                            fillColor: Colors.grey[200],
+                            filled: true,
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            helperText: "Required",
+                            labelText:'Owner Name',
+                            prefixIcon: Icon(Icons.person, color: Colors.black, ),
 
+                          ),
+                          keyboardType: TextInputType.name,
+                          textCapitalization: TextCapitalization.words,
+                          validator: requiredInputValidator,
                         ),
-                        keyboardType: TextInputType.name,
-                        textCapitalization: TextCapitalization.words,
-                        validator: requiredInputValidator,
                       ),
 
-                      DropdownButtonFormField<String>(
-                        isExpanded: true,
-                        isDense: true,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          helperText: "Required",
-                          labelText: "Bike Type",
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: DropdownButtonFormField<String>(
+                          isExpanded: true,
+                          isDense: true,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            helperText: "Required",
+                            labelText: "Bike Type",
+                          ),
+                          value: selectedBikeType,
+                          items: <String>["Standard","Cruiser", "Sport Bike", "Off-Road"]
+                              .map<DropdownMenuItem<String>>((String val) {
+                            return DropdownMenuItem<String>(
+                              value: val,
+                              child: Text(val),
+                            );
+                          }).toList(),
+
+                          onChanged: (newValue) {
+                            setState(() {
+                              selectedBikeType = newValue!;
+                            });
+                          },
+
                         ),
-                        value: selectedBikeType,
-                        items: <String>["Standard","Cruiser", "Sport Bike", "Off-Road"]
-                            .map<DropdownMenuItem<String>>((String val) {
-                          return DropdownMenuItem<String>(
-                            value: val,
-                            child: Text(val),
-                          );
-                        }).toList(),
-
-                        onChanged: (newValue) {
-                          setState(() {
-                            selectedBikeType = newValue!;
-                          });
-                        },
-
                       ),
 
 
-                      TextFormField(
-                        controller: makeController,
-                        //style: TextStyle(color: AppColors.textFieldTextColor),
-                        decoration: InputDecoration(
-                          fillColor: Colors.grey[200],
-                          filled: true,
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          helperText: "Required",
-                          labelText:'Make',
-                          prefixIcon: Icon(Icons.motorcycle_outlined, color: Colors.green, ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: makeController,
+                          //style: TextStyle(color: AppColors.textFieldTextColor),
+                          decoration: InputDecoration(
+                            fillColor: Colors.grey[200],
+                            filled: true,
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            helperText: "Required",
+                            labelText:'Make',
+                            prefixIcon: Icon(Icons.motorcycle_outlined, color: Colors.black, ),
 
+                          ),
+                          keyboardType: TextInputType.text,
+                          textCapitalization: TextCapitalization.words,
+                          validator: requiredInputValidator,
                         ),
-                        keyboardType: TextInputType.text,
-                        textCapitalization: TextCapitalization.words,
-                        validator: requiredInputValidator,
                       ),
 
-                      TextFormField(
-                        controller: modelController,
-                        //style: TextStyle(color: AppColors.textFieldTextColor),
-                        decoration: InputDecoration(
-                          fillColor: Colors.grey[200],
-                          filled: true,
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          helperText: "Required",
-                          labelText:'Model',
-                          prefixIcon: Icon(Icons.tune, color: Colors.black, ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: modelController,
+                          //style: TextStyle(color: AppColors.textFieldTextColor),
+                          decoration: InputDecoration(
+                            fillColor: Colors.grey[200],
+                            filled: true,
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            helperText: "Required",
+                            labelText:'Model',
+                            prefixIcon: Icon(Icons.tune, color: Colors.black, ),
 
+                          ),
+                          keyboardType: TextInputType.name,
+                          textCapitalization: TextCapitalization.words,
+                          validator: requiredInputValidator,
                         ),
-                        keyboardType: TextInputType.name,
-                        textCapitalization: TextCapitalization.words,
-                        validator: requiredInputValidator,
                       ),
 
 
@@ -176,19 +188,18 @@ class _AddBikePageState extends State<AddBikePage> {
                         children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.all(16.0),
-                            child: RaisedButton(
-                              color: Colors.black,
-                              child: Text(
-                                widget.addBike ? 'Add New Bike' : 'Update Bike',
-                                style: TextStyle(
-                                  fontSize: 16.0,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.blue,
+                                minimumSize: Size(150,35),
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                elevation: 5,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25),
                                 ),
                               ),
-                              textColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: new BorderRadius.circular(18.0),
-                                  side: BorderSide(color: Colors.black)),
-                              onPressed: _validateInputs,
+                              child: Text(widget.addBike ? 'Add New Bike' : 'Update Bike'),
+                              onPressed: () => _validateInputs(),
                             ),
                           ),
                         ],
