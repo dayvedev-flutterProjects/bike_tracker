@@ -24,63 +24,69 @@ class _BikesPageState extends State<BikesPage> {
         title: Text('Bikes'),
       ),
 
-      body: ValueListenableBuilder(
-          valueListenable: bikeBox.listenable(),
-          builder: (context, Box<Bike> box, _){
+      body: Padding(
+        padding: const EdgeInsets.only(top:8.0),
+        child: ValueListenableBuilder(
+            valueListenable: bikeBox.listenable(),
+            builder: (context, Box<Bike> box, _){
 
-            if (box.values.isEmpty)
-              return Center(
-                child: Text("No bikes found"),
+              if (box.values.isEmpty)
+                return Center(
+                  child: Text("No bikes found"),
+                );
+              return ListView.builder(
+                  itemCount: box.values.length,
+                  itemBuilder: (BuildContext context, int index ){
+                    Bike? zeBike = box.getAt(index);
+                    return Dismissible(
+                      direction: DismissDirection.endToStart,
+
+                      background: Container(
+                        color: Colors.red,
+                        child: ListTile(
+                          //leading: Icon(Icons.delete, color: Colors.white,),
+                          trailing: Icon(Icons.delete, color: Colors.white,),
+
+                        ),
+
+                      ),
+
+
+                      key: Key(index.toString()), // or use UniqueKey(),
+
+                      onDismissed: (direction) {
+                        box.deleteAt(index);
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            zeSnackBar("${zeBike!.ownerName}'s bike deleted")
+                        );
+
+                      },
+
+                      child: Card(
+                        elevation: 2,
+                        shape: RoundedRectangleBorder(
+                            side: new BorderSide(color: Colors.blueGrey, width: 2.0),
+                            borderRadius: BorderRadius.circular(4.0)
+                        ),
+                        child: ListTile(
+                          leading: CircleAvatar(child: Icon(Icons.motorcycle, )),
+                          title: Text(zeBike!.ownerName),
+                          subtitle: Text("${zeBike.make} ${zeBike.model}"),
+                          onTap: (){
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) =>
+                                    AddBikePage(addBike: false, index: index, bikeToUpdate: zeBike,))
+                            );
+                          },
+                        ),
+                      ),
+                    );
+                  }
               );
-            return ListView.builder(
-                itemCount: box.values.length,
-                itemBuilder: (BuildContext context, int index ){
-                  Bike? zeBike = box.getAt(index);
-                  return Dismissible(
-                    direction: DismissDirection.endToStart,
-
-                    background: Container(
-                      color: Colors.red,
-                      child: ListTile(
-                        //leading: Icon(Icons.delete, color: Colors.white,),
-                        trailing: Icon(Icons.delete, color: Colors.white,),
-
-                      ),
-
-                    ),
-
-
-                    key: Key(index.toString()), // or use UniqueKey(),
-
-                    onDismissed: (direction) {
-                      box.deleteAt(index);
-
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          zeSnackBar("${zeBike!.ownerName}'s bike deleted")
-                      );
-
-                    },
-
-                    child: Card(
-                      elevation: 2,
-
-                      child: ListTile(
-                        leading: CircleAvatar(child: Icon(Icons.motorcycle, )),
-                        title: Text(zeBike!.ownerName),
-                        subtitle: Text("${zeBike.make} ${zeBike.model}"),
-                        onTap: (){
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) =>
-                                  AddBikePage(addBike: false, index: index, bikeToUpdate: zeBike,))
-                          );
-                        },
-                      ),
-                    ),
-                  );
-                }
-            );
-          }
+            }
+        ),
       ),
 
       floatingActionButton: FloatingActionButton(
