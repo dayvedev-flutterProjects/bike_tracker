@@ -1,5 +1,5 @@
 import 'package:bike_tracker/models/bike.dart';
-import 'package:bike_tracker/utils/AppConstants.dart';
+import 'package:bike_tracker/utils/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
