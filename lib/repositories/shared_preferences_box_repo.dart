@@ -29,6 +29,12 @@ class SharedPrefsBox {
     });
   }
 
+  void del(dynamic item){
+    isar.writeTxn(() async {
+      vehicles.deleteSync(item); // insert & update
+    });
+  }
+
   void put(String key, dynamic item) {
     mySharedPrefsBox.put(key, item);
   }
